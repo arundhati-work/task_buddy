@@ -20,3 +20,26 @@ def login_view(request):
             "form":form
         }
         return render(request, "authmanager/login.html", context)
+    
+def logout_view(request):
+    logout(request)
+    return redirect("/")
+
+def signup_view(request):
+    if request.method=="GET":
+        form = UserCreationForm()
+        context = {
+            "form":form
+        }
+        return render(request, "authmanager/signup.html", context)
+    else:
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("/")
+        else:
+            context = {
+                "form":form
+            }
+            return render(request, "authmanager/signup.html", context)
