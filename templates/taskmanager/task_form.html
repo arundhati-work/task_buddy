@@ -14,7 +14,7 @@ Task
 <form method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    <button type="submit">{% if task %}Edit{% else %}Create{% endif %}Task</button>
+    <button type="submit">{% if task %}Edit{% else %}Create{% endif %} Task</button>
 </form>
 <p><a href="{% url 'task_list' %}">Show all Tasks</a></p>
 <p><a href="{% url 'home' %}">Back to Home</a></p>
