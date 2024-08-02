@@ -62,3 +62,18 @@ def edit_task(request, task_id):
                 "task":task
             }
             return render(request, "taskmanager/task_form.html", context)
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    if request.method=="GET":
+        context = {
+            "task":task
+        }
+        return render(request, "taskmanager/delete_task.html", context)
+    else:
+        task.delete()
+        return redirect("task_list")
+
+
+def task_complete(request, task_id):
+    pass
