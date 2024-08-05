@@ -3,8 +3,13 @@
 {% block content %}
 <h1>{{task.title}}</h1>
 <p>{{task.description}}</p>
-<p><a href="{% url 'edit_task' task.id %}">Edit Task</a></p>
-<p><a href="{% url 'delete_task' task.id %}">Delete Task</a></p>
+<p><a href="{% url 'edit_task' task.id %}">Edit</a> | 
+    {% if task.completed %}
+    <a href="{% url 'unmark_complete_task' task.id %}">Mark as Incomplete</a> | 
+    {% else %}
+    <a href="{% url 'complete_task' task.id %}">Mark as Complete</a> |
+    {% endif %}
+    <a href="{% url 'delete_task' task.id %}">Delete</a></p>
 <p><a href="{% url 'task_list' %}">Show all Tasks</a></p>
 <p><a href="{% url 'home' %}">Back to Home</a></p>
 {% endblock %}

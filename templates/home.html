@@ -4,6 +4,9 @@
 
 {% block content %}
 
-<p>Home Page</p>
+{% if user.is_authenticated %}
 <p><a href="{% url 'task_list' %}">Show all Tasks</a></p>
+{% else %}
+<p>Please login or signup to create tasks.</p>
+{% endif %}
 {% endblock %}

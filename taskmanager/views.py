@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 from .forms import TaskForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
     return render(request, "home.html")
 
+@login_required
 def task_list(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(author=request.user)
     context = {
         "tasks":tasks
     }
@@ -75,5 +77,14 @@ def delete_task(request, task_id):
         return redirect("task_list")
 
 
-def task_complete(request, task_id):
-    pass
+def complete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.completed = True
+    task.save()
+    return redirect("task_list")
+
+def unmark_complete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.completed = False
+    task.save()
+    return redirect("task_list")
